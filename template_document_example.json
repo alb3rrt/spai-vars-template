@@ -13,17 +13,17 @@
     {
       "name": "MESSAGE",
       "type": "string",
-      "placeholder": "e.g. Security distance around roads",
+      "placeholder": "e.g. Vegetation interference Catalonia",
       "minLength": 3,
       "maxLength": 80
     },
     {
-      "name": "MAX_ITEMS",
-      "type": "numeric",
-      "min": 0,
-      "max": 10000,
+      "name": "NUMERIC",
+      "type": "number",
+      "min": 5,
+      "max": 35,
       "step": 0.1,
-      "placeholder": "e.g. 150.5"
+      "placeholder": "e.g. 7.5 (meters)"
     }
   ]
 }
