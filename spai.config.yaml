@@ -1,0 +1,5 @@
+project: template-vars-tests
+
+scripts:
+  - name: test
+    run_on_start: true
