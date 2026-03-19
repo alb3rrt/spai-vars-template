@@ -1,35 +1,61 @@
-# template-vars
+# Template Vars Docs
 
-Plantilla minima de SPAI para probar variables de entrada en templates.
+This folder contains a minimal template example for SPAI Hub with `string` and `numeric` inputs.
 
-## Estructura
+## Mongo Template Example
 
-- `spai.config.yaml`: configuracion del proyecto SPAI.
-- `spai.vars.json`: variables globales por defecto.
-- `scripts/test/main.py`: script de ejemplo que lee variables.
-- `scripts/test/requirements.txt`: dependencias del servicio.
+Use `template_document_example.json` as a base document for `db.templates`.
 
-## Variables incluidas
+## Supported Variable Types
 
-- `MESSAGE` (texto)
-- `MAX_ITEMS` (numero)
-- `some_data` (lista de numeros)
+### Text (`string` or `text`)
 
-## Uso local
+Supported options:
 
-```bash
-spai install
-spai run
-```
+- `name` (`string`, required)
+- `type` (`"string"` or `"text"`, required)
+- `placeholder` (`string`, optional)
+- `minLength` (`integer > 0`, optional)
+- `maxLength` (`integer > 0`, optional)
+- `default` (`string`, optional)
 
-## Sobrescribir variables desde CLI
+Behavior:
 
-```bash
-spai run -v MESSAGE='hola desde cli' -v MAX_ITEMS=25
-spai deploy -t template-vars -v MESSAGE='produccion' -v MAX_ITEMS=50
-```
+- Empty value is stored as `null`.
+- `minLength`/`maxLength` are enforced by native input attributes.
+- No trimming is applied in the input component.
 
-## Notas
+### Numeric (`numeric` or `number`)
 
-- `MAX_ITEMS` debe ser numerico (`int` o `float`).
-- `MESSAGE` debe ser texto (`string`).
+Supported options:
+
+- `name` (`string`, required)
+- `type` (`"numeric"` or `"number"`, required)
+- `placeholder` (`string`, optional)
+- `min` (`number`, optional)
+- `max` (`number`, optional)
+- `step` (`number > 0`, optional)
+- `default` (`number`, optional)
+
+Behavior:
+
+- Empty value is stored as `null`.
+- Invalid numeric values are stored as `null`.
+- `min`/`max` and `step` are validated in the component.
+- Comma decimals are accepted (`12,5` -> `12.5`).
+
+## Mongo Edge Cases Covered
+
+- If `template.variables` is missing or not an array, no variable inputs are rendered.
+- If a variable is missing `name` or `type`, it is ignored.
+- Duplicate variable names are ignored after the first valid one.
+- If `min > max` (or `minLength > maxLength`), values are normalized automatically.
+
+## Quick Local Test
+
+1. Insert/update your template in Mongo using `template_document_example.json`.
+2. Run backend and UI locally.
+3. Open `/hub/<template-id>`.
+4. Verify:
+   - `MESSAGE` renders as text input.
+   - `MAX_ITEMS` renders as numeric input.

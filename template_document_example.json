@@ -1,0 +1,29 @@
+{
+  "id": "replace-with-template-id",
+  "user_id": "replace-with-user-id",
+  "name": "spai-vars-template",
+  "title": "SPAI Vars Template",
+  "brief": "Template with text and numeric variables",
+  "description": "Template for vars",
+  "url": "https://github.com/alb3rrt/spai-vars-template",
+  "thumbnail": "https://earthpulse.ai/logo_ep.webp",
+  "display": true,
+  "visibility": "public",
+  "variables": [
+    {
+      "name": "MESSAGE",
+      "type": "string",
+      "placeholder": "e.g. Security distance around roads",
+      "minLength": 3,
+      "maxLength": 80
+    },
+    {
+      "name": "MAX_ITEMS",
+      "type": "numeric",
+      "min": 0,
+      "max": 10000,
+      "step": 0.1,
+      "placeholder": "e.g. 150.5"
+    }
+  ]
+}
